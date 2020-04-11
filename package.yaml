@@ -1,0 +1,50 @@
+name:                CEREScript-Core01-Parser
+version:             0.0.0.1
+github:              "HolosDev/CEREScript-Core01-Parser"
+license:             OtherLicense
+author:              "YongJoon Joe"
+maintainer:          "YongJoon Joe <developer@quietjoon.net>"
+copyright:           "2020 Holos Works / PPUZZL Group"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+description:         Please see the README on GitHub at <https://github.com/HolosDev/CEREScript-Core01-Parser#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- text
+- containers
+- text-show
+- text-show-instances
+- text-trie
+- vector
+- CEREScript-Core01
+
+default-extensions:
+- OverloadedStrings
+
+library:
+  source-dirs: src
+
+tests:
+  Test-Spec:
+    main:                Spec.hs
+    source-dirs:
+    - test
+    - tests/Spec
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - CEREScript-Core01-Parser
+    - HUnit
+    - QuickCheck
+    - silently
+    - test-framework
+    - test-framework-hunit
+    - test-framework-quickcheck2
+    - test-framework-th
+    - call-stack

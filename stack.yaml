@@ -1,0 +1,11 @@
+resolver: lts-14.27
+
+packages:
+- .
+
+extra-deps:
+- text-trie-0.2.5.0
+- splitmix-0.0.4
+- github: HolosDev/CEREScript-Core01
+#- git: https://gitlab.com/holosdev/CEREScript-Core01
+  commit: a7a7f22a45f15cc9b7d89c1a2b438235dfa3e11a
