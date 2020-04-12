@@ -1,5 +1,5 @@
 name:                CEREScript-Core01-Parser
-version:             0.0.0.1
+version:             0.0.1.0
 github:              "HolosDev/CEREScript-Core01-Parser"
 license:             OtherLicense
 author:              "YongJoon Joe"
@@ -26,7 +26,8 @@ default-extensions:
 - OverloadedStrings
 
 library:
-  source-dirs: src
+  source-dirs:
+  - src
 
 tests:
   Test-Spec:
@@ -38,6 +39,9 @@ tests:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
+    default-extensions:
+    - TemplateHaskell
+    - OverloadedStrings
     dependencies:
     - CEREScript-Core01-Parser
     - HUnit
