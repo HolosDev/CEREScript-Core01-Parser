@@ -36,12 +36,12 @@ readLifter :: ((a, Text) -> Result b) -> Text -> Result b
 readLifter reader aText = reader (undefined, aText)
 
 readCompositor
-  :: (Text -> Result a)
+  :: (a -> b -> c)
+  -> (Text -> Result a)
   -> (Text -> Result b)
-  -> (a -> b -> c)
   -> Text
   -> Result c
-readCompositor readerA readerB f aText = convertResult (\_ -> f rA rB) eB
+readCompositor f readerA readerB aText = convertResult (\_ -> f rA rB) eB
  where
   eA                 = readerA aText
   Right (rA, _)      = eA
