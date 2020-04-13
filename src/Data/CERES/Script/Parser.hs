@@ -30,7 +30,7 @@ parseCEREScriptSub acc@(cScript, aText) = if isEnd
     >>= readCEREScriptDelimiter
     >>= parseCEREScriptSub
  where
-  isEnd = elem aText ["", "\n"]
+  isEnd = aText `elem` ["", "\n"]
   readCEREScriptDelimiter =
     findPattern "\n" "[Fail] Reading CEREScript delimiter"
 
@@ -150,15 +150,15 @@ parseCERES aText = case pHeader of
 
 
 readCERESOperatorWrapper :: Text -> Result CERESOperator
-readCERESOperatorWrapper = readWrapper "[Fail] Reading CERESOperator fails" readCERESOperator
+readCERESOperatorWrapper =
+  readWrapper "[Fail] Reading CERESOperator fails" readCERESOperator
 
 readCERESOperator :: Text -> Maybe (CERESOperator, Text)
-readCERESOperator aText
-  | T.isPrefixOf "Add" aText = coReader "Add" COAAdd aText
-  | T.isPrefixOf "Sub" aText = coReader "Sub" COASub aText
-  | T.isPrefixOf "Mul" aText = coReader "Mul" COAMul aText
-  | T.isPrefixOf "Div" aText = coReader "Div" COADiv aText
-  | T.isPrefixOf "Mod" aText = coReader "Mod" COAMod aText
-  | otherwise                  = Nothing
+readCERESOperator aText | T.isPrefixOf "Add" aText = coReader "Add" COAAdd aText
+                        | T.isPrefixOf "Sub" aText = coReader "Sub" COASub aText
+                        | T.isPrefixOf "Mul" aText = coReader "Mul" COAMul aText
+                        | T.isPrefixOf "Div" aText = coReader "Div" COADiv aText
+                        | T.isPrefixOf "Mod" aText = coReader "Mod" COAMod aText
+                        | otherwise                = Nothing
   where coReader key tf body = Just (tf, fromJust . T.stripPrefix key $ body)
 

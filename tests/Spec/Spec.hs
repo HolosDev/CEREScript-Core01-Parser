@@ -1,12 +1,14 @@
-import qualified Test.Framework as Test
-import qualified Test.Framework.Providers.HUnit as Test
-import qualified Test.Framework.Providers.QuickCheck2 as Test
-import Test.HUnit
-import Test.QuickCheck
+import qualified Test.Framework                as Test
+import qualified Test.Framework.Providers.HUnit
+                                               as Test
+import qualified Test.Framework.Providers.QuickCheck2
+                                               as Test
+import           Test.HUnit
+import           Test.QuickCheck
 
-import Test.Data.CERES.Script.Parser
-import Test.Data.CERES.Value.Parser
-import Test.Data.CERES.VariablePosition.Parser
+import           Test.Data.CERES.Script.Parser
+import           Test.Data.CERES.Value.Parser
+import           Test.Data.CERES.VariablePosition.Parser
 
 
 main :: IO ()

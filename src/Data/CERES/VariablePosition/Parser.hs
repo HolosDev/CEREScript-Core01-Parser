@@ -1,6 +1,8 @@
 module Data.CERES.VariablePosition.Parser where
 
 
+import           Control.Monad                  ( (>=>) )
+
 import           Data.Bifunctor
 import           Data.Either
 import           Data.Maybe
@@ -20,8 +22,8 @@ import           Debug.Trace
 parseVariablePosition :: Text -> Result VariablePosition
 parseVariablePosition = readCompositor
   VP
-  (\t -> readVariablePlace t >>= findPattern "[" "[Fail] Reading VP Opener")
-  (\t -> readVariableIndex t >>= findPattern "]" "[Fail] Reading VP Closer")
+  (readVariablePlace >=> findPattern "[" "[Fail] Reading VP Opener")
+  (readVariableIndex >=> findPattern "]" "[Fail] Reading VP Closer")
 
 readVariablePlace :: Text -> Result VariablePlace
 readVariablePlace aText = case pHeader of

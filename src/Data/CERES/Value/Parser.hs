@@ -24,7 +24,7 @@ parseValue aText = readVType aText >>= readValue
 
 readVType :: Text -> Result ValueType
 readVType aText = if T.isPrefixOf "A[|| " aText
-  then (Right (VTArr, fromJust . T.stripPrefix "A[|| " $ aText))
+  then Right (VTArr, fromJust . T.stripPrefix "A[|| " $ aText)
   else maybe (Left ("[Fail]<getValue> Not have \"<| \"", pHeader)) rVType mPRest
  where
   (pHeader, mPRest) = second (T.stripPrefix "<| ") . T.breakOn "<| " $ aText
@@ -117,16 +117,16 @@ readItem (idx, aText) = convertResult (\v -> Just (idx, v)) (parseValue aText)
 
 
 readValueTypeWrapper :: Text -> Result ValueType
-readValueTypeWrapper = readWrapper "[Fail] Reading ValueType fails" readValueType
+readValueTypeWrapper =
+  readWrapper "[Fail] Reading ValueType fails" readValueType
 
 readValueType :: Text -> Maybe (ValueType, Text)
-readValueType aText
-  | T.isPrefixOf "C-Int" aText = coReader "C-Int" VTInt aText
-  | T.isPrefixOf "C-Dbl" aText = coReader "C-Dbl" VTDbl aText
-  | T.isPrefixOf "CBool" aText = coReader "CBool" VTBool aText
-  | T.isPrefixOf "CAtom" aText = coReader "CAtom" VTAtom aText
-  | T.isPrefixOf "C-Arr" aText = coReader "C-Arr" VTArr aText
-  | T.isPrefixOf "C-Str" aText = coReader "C-Str" VTStr aText
-  | T.isPrefixOf "C-Err" aText = coReader "C-Err" VTErr aText
-  | otherwise                  = Nothing
+readValueType aText | T.isPrefixOf "C-Int" aText = coReader "C-Int" VTInt aText
+                    | T.isPrefixOf "C-Dbl" aText = coReader "C-Dbl" VTDbl aText
+                    | T.isPrefixOf "CBool" aText = coReader "CBool" VTBool aText
+                    | T.isPrefixOf "CAtom" aText = coReader "CAtom" VTAtom aText
+                    | T.isPrefixOf "C-Arr" aText = coReader "C-Arr" VTArr aText
+                    | T.isPrefixOf "C-Str" aText = coReader "C-Str" VTStr aText
+                    | T.isPrefixOf "C-Err" aText = coReader "C-Err" VTErr aText
+                    | otherwise                  = Nothing
   where coReader key tf body = Just (tf, fromJust . T.stripPrefix key $ body)

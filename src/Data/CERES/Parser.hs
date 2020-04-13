@@ -107,8 +107,8 @@ readQuoted aText =
     >>= findPattern "\"" "[Fail] Reading Closing of Name fails"
 readName :: (a, Text) -> Result Text
 readName (a, aText) = if T.null pRest
-  then (Left ("[Fail] Reading Name Body fails", aText))
-  else (Right (pBody, pRest))
+  then Left ("[Fail] Reading Name Body fails", aText)
+  else Right (pBody, pRest)
   where (pBody, pRest) = T.breakOn "\"" aText
 
 readQuotedNKey aText =
@@ -117,8 +117,8 @@ readQuotedNKey aText =
     >>= findPattern "\"" "[Fail] Reading Closing of Name fails"
 readNKey :: (a, Text) -> Result NKey
 readNKey (a, aText) = if T.null pRest
-  then (Left ("[Fail] Reading Name Body fails", aText))
-  else (Right (T.toStrict pBody, pRest))
+  then Left ("[Fail] Reading Name Body fails", aText)
+  else Right (T.toStrict pBody, pRest)
   where (pBody, pRest) = T.breakOn "\"" aText
 
 
@@ -146,7 +146,7 @@ readIntListSub acc aText | isJust shownEnd = Just (sort acc, aEndRest)
 eIntListReader :: Text -> Result [Int]
 eIntListReader aText = maybe
   (maybe (Left ("[Fail] Reading IL Opener", aText))
-         (\t -> eIntListReaderSub [] (T.append "," t))
+         (eIntListReaderSub [] . T.append ",")
          mRest
   )
   (\t -> Right ([], t))
