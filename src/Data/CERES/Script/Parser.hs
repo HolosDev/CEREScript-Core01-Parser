@@ -21,116 +21,114 @@ parseCERES :: Text -> Result CERES
 parseCERES aText = case pHeader of
   "InitVariable" ->
     ceresHeaderWrapper CRSInitVariable
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
   "InitVariableAt" ->
     ceresHeaderWrapper CRSInitVariableAt
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
   "SetValue" ->
     ceresHeaderWrapper CRSSetValue
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
   "DeleteVariable" ->
-    ceresHeaderWrapper CRSDeleteVariable
-    >>= readAppliable parseVariablePosition
+    ceresHeaderWrapper CRSDeleteVariable >>= addVariablePosition
   "ModifyValue" ->
     ceresHeaderWrapper CRSModifyValue
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseCERESOperator
+      >>= addCERESOperator
   "CopyValue" ->
     ceresHeaderWrapper CRSCopyValue
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
   "ConvertValue" ->
     ceresHeaderWrapper CRSConvertValue
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseValueType
+      >>= addValueType
   "ConvertValueBy" ->
     ceresHeaderWrapper CRSConvertValueBy
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
   "ConvertValueWith" ->
     ceresHeaderWrapper CRSConvertValueWith
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
-  "ReplaceText" ->
-    ceresHeaderWrapper CRSReplaceText
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
+  "ReplaceText" -> ceresHeaderWrapper CRSReplaceText >>= addVariablePosition
   "ReplaceTextTo" ->
     ceresHeaderWrapper CRSReplaceTextTo
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
   "Random" ->
     ceresHeaderWrapper CRSRandom
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseValueType
+      >>= addValueType
   "RandomBy" ->
     ceresHeaderWrapper CRSRandomBy
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
   "RandomWith" ->
     ceresHeaderWrapper CRSRandomWith
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseValueType
+      >>= addValueType
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
   "RandomWithBy" ->
     ceresHeaderWrapper CRSRandomWithBy
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
   "ElapseTime" ->
     ceresHeaderWrapper CRSElapseTime
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
-  "SPControl" ->
-    ceresHeaderWrapper CRSSPControl
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
+  "SPControl" -> ceresHeaderWrapper CRSSPControl >>= addVariablePosition
   "SIControl" ->
     ceresHeaderWrapper CRSSIControl
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
   "SIInit" ->
     ceresHeaderWrapper CRSSIInit
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
       >>= readCERESDelimiter
-      >>= readAppliable parseVariablePosition
+      >>= addVariablePosition
  where
   (pHeader, pRest) = T.breakOn " " aText
   ceresHeaderWrapper cH =
     findPattern " " "[Fail] Reading CERES Header fails" (cH, pRest)
-  parseCERESOperator = readCERESOperatorWrapper
-  parseValueType     = readValueTypeWrapper
-  readCERESDelimiter = findPattern " " "[Fail] Reading CERES delimiter"
+  parseCERESOperator  = readCERESOperatorWrapper
+  parseValueType      = readValueTypeWrapper
+  readCERESDelimiter  = findPattern " " "[Fail] Reading CERES delimiter"
+  addVariablePosition = readAppliable parseVariablePosition
+  addValueType        = readAppliable parseValueType
+  addCERESOperator    = readAppliable parseCERESOperator
 
 
 readCERESOperatorWrapper :: Text -> Result CERESOperator
