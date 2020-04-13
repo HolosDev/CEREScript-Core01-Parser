@@ -28,6 +28,10 @@ convertInternalResult f (a, t) = Right (f a, t)
 readAppliable :: (Text -> Result a) -> (a -> b, Text) -> Result b
 readAppliable reader (f, aText) = convertResult f (reader aText)
 
+compositeResult :: (a -> b -> c) -> (Text -> Result a) -> (b, Text) -> Result c
+compositeResult f readerA (b, aText) =
+  either (\(e, t) -> Left (e, t)) (\(a, t) -> Right (f a b, t)) (readerA aText)
+
 --readAnyway :: forall a b. (Text -> Result b) -> (a,Text) -> Result b
 readAnyway :: (Text -> Result b) -> (a, Text) -> Result b
 readAnyway reader (_, aText) = reader aText

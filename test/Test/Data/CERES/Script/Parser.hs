@@ -24,3 +24,10 @@ tests = $(testGroupGenerator)
 case_readInitVariable01 = assertEqual "Reading valid InitVariable"
       (Right ((CRSInitVariable (VP AtHere (VII 1)) (VP AtTricky (VIN "WorldTime"))),""))
       (parseCERES "InitVariable AtHere[VII=1] AtTricky[VIN=\"WorldTime\"]")
+case_readConvertValue01 = assertEqual "Reading valid ConvertValue"
+      (Right ((CRSConvertValue (VP AtWorld (VIIT 2 3)) VTAtom),""))
+      (parseCERES "ConvertValue AtWorld[VIIT=2:3] CAtom")
+case_readCEREScript01 = assertEqual "Reading valid CEREScript"
+      (Right ([(CRSInitVariable (VP AtHere (VII 1)) (VP AtTricky (VIN "WorldTime")))
+              ,(CRSConvertValue (VP AtWorld (VIIT 2 3)) VTAtom)],""))
+      (parseCEREScript "InitVariable AtHere[VII=1] AtTricky[VIN=\"WorldTime\"]\nConvertValue AtWorld[VIIT=2:3] CAtom\n")

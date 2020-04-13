@@ -17,6 +17,24 @@ import           Data.CERES.VariablePosition
 import           Data.CERES.VariablePosition.Parser
 
 
+--TODO: Read CEREScript from line.
+--NOTE: Problem: How to implement this as recursively?
+parseCEREScript :: Text -> Result CEREScript
+parseCEREScript aText = parseCEREScriptSub ([], aText)
+
+parseCEREScriptSub :: (CEREScript, Text) -> Result CEREScript
+parseCEREScriptSub acc@(cScript, aText) = if isEnd
+  then Right (reverse cScript, aText)
+  else
+    compositeResult (:) parseCERES acc
+    >>= readCEREScriptDelimiter
+    >>= parseCEREScriptSub
+ where
+  isEnd = elem aText ["", "\n"]
+  readCEREScriptDelimiter =
+    findPattern "\n" "[Fail] Reading CEREScript delimiter"
+
+
 parseCERES :: Text -> Result CERES
 parseCERES aText = case pHeader of
   "InitVariable" ->
