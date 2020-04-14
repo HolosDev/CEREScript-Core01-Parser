@@ -40,6 +40,7 @@ readVariablePlace aText = case pHeader of
   "AtLNVars" -> Right (AtLNVars, pRest)
   "AtLTemp"  -> Right (AtLTemp, pRest)
   "AtLNTemp" -> Right (AtLNTemp, pRest)
+  "AtReg"    -> Right (AtReg, pRest)
   "AtHere"   -> Right (AtHere, pRest)
   "AtNull"   -> Right (AtNull, pRest)
   _          -> Left ("[Fail] No such VariablePlace", aText)
@@ -55,8 +56,9 @@ readVariableIndex aText = maybeNext (maybeNext eVI VINull mVINull)
   (pHeader, pRest) = T.breakOn "=" aText
   viWrapper vi = findPattern "=" "[Fail] Reading VI Opener fails" (vi, pRest)
   eVI = case pHeader of
-    "VII" -> viWrapper VII >>= readAppliable readIdx
-    "VIN" -> viWrapper VIN >>= readAppliable readQuotedNKey
+    "VII"  -> viWrapper VII >>= readAppliable readIdx
+    "VIN"  -> viWrapper VIN >>= readAppliable readQuotedNKey
+    "VIpN" -> viWrapper VIpN >>= readAppliable readQuotedNKey
     "VIIT" ->
       viWrapper VIIT
         >>= readAppliable readIdx
@@ -67,6 +69,11 @@ readVariableIndex aText = maybeNext (maybeNext eVI VINull mVINull)
         >>= readAppliable readQuotedNKey
         >>= readVIDelimiter
         >>= readAppliable readTime
+    "VIpNT" ->
+      viWrapper VIpNT
+        >>= readAppliable readQuotedNKey
+        >>= readVIDelimiter
+        >>= readAppliable readTime
     "VIIRI" ->
       viWrapper VIIRI
         >>= readAppliable readIdx
@@ -74,6 +81,11 @@ readVariableIndex aText = maybeNext (maybeNext eVI VINull mVINull)
         >>= readAppliable readIndices
     "VINRI" ->
       viWrapper VINRI
+        >>= readAppliable readQuotedNKey
+        >>= readVIDelimiter
+        >>= readAppliable readIndices
+    "VIpNRI" ->
+      viWrapper VIpNRI
         >>= readAppliable readQuotedNKey
         >>= readVIDelimiter
         >>= readAppliable readIndices
@@ -91,10 +103,18 @@ readVariableIndex aText = maybeNext (maybeNext eVI VINull mVINull)
         >>= readAppliable readIndices
         >>= readVIDelimiter
         >>= readAppliable readTime
-    "VIV"  -> viWrapper VIV >>= readAppliable parseValue
-    "PVII" -> viWrapper PVII >>= readAppliable readIdx
-    "PVIN" -> viWrapper PVIN >>= readAppliable readQuotedNKey
-    "PVIT" -> viWrapper PVIT >>= readAppliable readTime
+    "VIpNRIT" ->
+      viWrapper VIpNRIT
+        >>= readAppliable readQuotedNKey
+        >>= readVIDelimiter
+        >>= readAppliable readIndices
+        >>= readVIDelimiter
+        >>= readAppliable readTime
+    "VIV"   -> viWrapper VIV >>= readAppliable parseValue
+    "PVII"  -> viWrapper PVII >>= readAppliable readIdx
+    "PVIN"  -> viWrapper PVIN >>= readAppliable readQuotedNKey
+    "PVIpN" -> viWrapper PVIpN >>= readAppliable readQuotedNKey
+    "PVIT"  -> viWrapper PVIT >>= readAppliable readTime
     "PVIIRI" ->
       viWrapper PVIIRI
         >>= readAppliable readIdx
@@ -102,6 +122,11 @@ readVariableIndex aText = maybeNext (maybeNext eVI VINull mVINull)
         >>= readAppliable readIndices
     "PVINRI" ->
       viWrapper PVINRI
+        >>= readAppliable readQuotedNKey
+        >>= readVIDelimiter
+        >>= readAppliable readIndices
+    "PVIpNRI" ->
+      viWrapper PVIpNRI
         >>= readAppliable readQuotedNKey
         >>= readVIDelimiter
         >>= readAppliable readIndices
@@ -114,6 +139,13 @@ readVariableIndex aText = maybeNext (maybeNext eVI VINull mVINull)
         >>= readAppliable readTime
     "PVINRIT" ->
       viWrapper PVINRIT
+        >>= readAppliable readQuotedNKey
+        >>= readVIDelimiter
+        >>= readAppliable readIndices
+        >>= readVIDelimiter
+        >>= readAppliable readTime
+    "PVIpNRIT" ->
+      viWrapper PVIpNRIT
         >>= readAppliable readQuotedNKey
         >>= readVIDelimiter
         >>= readAppliable readIndices

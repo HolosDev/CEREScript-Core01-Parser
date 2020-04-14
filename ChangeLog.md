@@ -7,6 +7,28 @@ Changelog for CEREScript-Core01-Parser
 * Use ready-made parser package
 
 
+## 0.0.4.0 -- 2020-04-14
+
+### Added
+* Implement parsers for new elements of `CERES`, `CERESOperator`, `VariablePlace` and `VariableIndex`
+
+
+## 0.0.3.0 -- 2020-04-14
+
+### Added
+* Implement `parseCEREScript`
+
+### Changed
+* Reorder arguments of `readCompositor`
+
+
+## 0.0.2.0 -- 2020-04-13
+
+### Added
+* Implement CERES Parser
+* Implement ValueType Parser
+
+
 ## 0.0.1.0 -- 2020-04-13
 
 ### Added
