@@ -8,4 +8,4 @@ extra-deps:
 - splitmix-0.0.4
 - github: HolosDev/CEREScript-Core01
 #- git: https://gitlab.com/holosdev/CEREScript-Core01
-  commit: 7695807e38a01274ee28a5baaa55552978ac4865
+  commit: d783fda2058af1723b58be83b55ebfda30049d24

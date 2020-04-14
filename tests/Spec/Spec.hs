@@ -7,14 +7,12 @@ import           Test.HUnit
 import           Test.QuickCheck
 
 import           Test.Data.CERES.Script.Parser
-import           Test.Data.CERES.Value.Parser
-import           Test.Data.CERES.VariablePosition.Parser
+import           Test.Data.CERES.Variable.Parser
 
 
 main :: IO ()
 main = do
   Test.defaultMain
     [ Test.Data.CERES.Script.Parser.tests
-    , Test.Data.CERES.Value.Parser.tests
-    , Test.Data.CERES.VariablePosition.Parser.tests
+    , Test.Data.CERES.Variable.Parser.tests
     ]

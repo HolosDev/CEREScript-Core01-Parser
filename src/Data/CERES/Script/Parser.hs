@@ -12,8 +12,7 @@ import           Data.CERES.Data
 import           Data.CERES.Operator
 import           Data.CERES.Parser
 import           Data.CERES.Type
-import           Data.CERES.Value.Parser
-import           Data.CERES.VariablePosition.Parser
+import           Data.CERES.Variable.Parser
 
 
 --TODO: Read CEREScript from line.

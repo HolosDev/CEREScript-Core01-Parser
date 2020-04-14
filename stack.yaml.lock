@@ -19,19 +19,19 @@ packages:
   original:
     hackage: splitmix-0.0.4
 - completed:
-    size: 14058
-    url: https://github.com/HolosDev/CEREScript-Core01/archive/7695807e38a01274ee28a5baaa55552978ac4865.tar.gz
+    size: 13967
+    url: https://github.com/HolosDev/CEREScript-Core01/archive/d783fda2058af1723b58be83b55ebfda30049d24.tar.gz
     cabal-file:
       size: 2058
       sha256: 0a3b421949e8178c26225d1162dc45faff22b95a446a80231ba717fab377b376
     name: CEREScript-Core01
     version: 0.16.0.0
-    sha256: 973cd303bfe99729f858e729b29b7ec8466f831ec8455803e0071e97d359db4c
+    sha256: 72c0ddd1e1afbed186f7210a7d5a6f206fe052e72272d29d0f4f4d9b6b53176d
     pantry-tree:
-      size: 2285
-      sha256: ebd7f0c4256f8398af79a26d2daa8b784d14f1d81dcea38b943135c898626886
+      size: 2284
+      sha256: 18a54fe588c9946d3e60672d5f833dd8d79e533de271772ca5a91436992524c7
   original:
-    url: https://github.com/HolosDev/CEREScript-Core01/archive/7695807e38a01274ee28a5baaa55552978ac4865.tar.gz
+    url: https://github.com/HolosDev/CEREScript-Core01/archive/d783fda2058af1723b58be83b55ebfda30049d24.tar.gz
 snapshots:
 - completed:
     size: 524996

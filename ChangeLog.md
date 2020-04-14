@@ -7,6 +7,13 @@ Changelog for CEREScript-Core01-Parser
 * Use ready-made parser package
 
 
+## 0.0.4.2 -- 2020-04-15
+
+### Changed
+* Unify VariablePosition and Value modules to resolve mutual reference
+* Rename imported modules because of change in CEREScript-Core01 v0.16.1.0
+
+
 ## 0.0.4.1 -- 2020-04-14
 
 ### Changed
