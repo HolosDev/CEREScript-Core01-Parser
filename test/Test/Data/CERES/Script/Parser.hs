@@ -12,10 +12,8 @@ import qualified Data.Text.Lazy                as T
 
 
 import           Data.CERES.Type
-import           Data.CERES.Script
+import           Data.CERES.Data
 import           Data.CERES.Script.Parser
-import           Data.CERES.Value
-import           Data.CERES.VariablePosition
 
 
 tests = $(testGroupGenerator)

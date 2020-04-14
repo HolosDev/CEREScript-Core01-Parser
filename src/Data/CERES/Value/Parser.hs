@@ -10,7 +10,7 @@ import qualified Data.Text.Lazy                as T
 import qualified Data.Text.Lazy.Read           as TR
 
 import           Data.CERES.Type
-import           Data.CERES.Value
+import           Data.CERES.Data
 
 import           Data.CERES.Parser
 

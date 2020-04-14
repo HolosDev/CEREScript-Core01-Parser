@@ -12,8 +12,7 @@ import qualified Data.Text.Lazy                as T
 
 
 import           Data.CERES.Type
-import           Data.CERES.Script
-import           Data.CERES.Value
+import           Data.CERES.Data
 import           Data.CERES.Value.Parser
 
 

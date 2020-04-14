@@ -7,6 +7,12 @@ Changelog for CEREScript-Core01-Parser
 * Use ready-made parser package
 
 
+## 0.0.4.1 -- 2020-04-14
+
+### Changed
+* Rename imported modules because of change in CEREScript-Core01 v0.16.0.0
+
+
 ## 0.0.4.0 -- 2020-04-14
 
 ### Added
