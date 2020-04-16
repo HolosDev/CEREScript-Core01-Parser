@@ -268,12 +268,12 @@ readValueTypeWrapper =
   readWrapper "[Fail] Reading ValueType fails" readValueType
 
 readValueType :: Text -> Maybe (ValueType, Text)
-readValueType aText | T.isPrefixOf "C-Int" aText = coReader "C-Int" VTInt aText
-                    | T.isPrefixOf "C-Dbl" aText = coReader "C-Dbl" VTDbl aText
-                    | T.isPrefixOf "CBool" aText = coReader "CBool" VTBool aText
-                    | T.isPrefixOf "CAtom" aText = coReader "CAtom" VTAtom aText
-                    | T.isPrefixOf "C-Arr" aText = coReader "C-Arr" VTArr aText
-                    | T.isPrefixOf "C-Str" aText = coReader "C-Str" VTStr aText
-                    | T.isPrefixOf "C-Err" aText = coReader "C-Err" VTErr aText
+readValueType aText | T.isPrefixOf "C-Int" aText = vtReader "C-Int" VTInt aText
+                    | T.isPrefixOf "C-Dbl" aText = vtReader "C-Dbl" VTDbl aText
+                    | T.isPrefixOf "CBool" aText = vtReader "CBool" VTBool aText
+                    | T.isPrefixOf "CAtom" aText = vtReader "CAtom" VTAtom aText
+                    | T.isPrefixOf "C-Arr" aText = vtReader "C-Arr" VTArr aText
+                    | T.isPrefixOf "C-Str" aText = vtReader "C-Str" VTStr aText
+                    | T.isPrefixOf "C-Err" aText = vtReader "C-Err" VTErr aText
                     | otherwise                  = Nothing
-  where coReader key tf body = Just (tf, fromJust . T.stripPrefix key $ body)
+  where vtReader key vt body = Just (vt, fromJust . T.stripPrefix key $ body)
