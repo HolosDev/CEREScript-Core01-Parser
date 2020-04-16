@@ -152,7 +152,7 @@ readVariableIndex aText = maybeNext (maybeNext eVI VINull mVINull)
         >>= readAppliable readIndices
         >>= readVIDelimiter
         >>= readAppliable readTime
-    _ -> Left ("[Fail] Reading VariableIndex fails", pRest)
+    _ -> Left ("[Fail] Reading VariableIndex fails", aText)
   readIdx         = readIntWrapper "[Fail] Reading Idx fails"
   readTime        = readIntWrapper "[Fail] Reading Time fails"
   readIndices     = eIntListReader
