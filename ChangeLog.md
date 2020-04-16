@@ -7,6 +7,15 @@ Changelog for CEREScript-Core01-Parser
 * Use ready-made parser package
 
 
+## 0.0.5.0 -- 2020-04-16
+
+### Changed
+* Redesign CERES parser because of change in CEREScript-Core01 v0.17.3.0
+
+### Fixed
+* Fix small bugs
+
+
 ## 0.0.4.2 -- 2020-04-15
 
 ### Changed
