@@ -27,7 +27,8 @@ parseCERESOperator aText = maybe
 
 parseCERESOperatorSub :: Text -> Result CERESOperator
 parseCERESOperatorSub aText = if TL.null pRest
-  then case pBody of
+  then Left ("[Fail] Reading CERESOperator body@Sub", aText)
+  else case pBody of
     "Add"      -> Right (COAAdd, pRest)
     "Sub"      -> Right (COASub, pRest)
     "Mul"      -> Right (COAMul, pRest)
@@ -53,7 +54,6 @@ parseCERESOperatorSub aText = if TL.null pRest
     "IsInfix"  -> Right (COTIsInfix, pRest)
     "IsSuffix" -> Right (COTIsSuffix, pRest)
     _          -> readCustomCO
-  else Left ("[Fail] Reading CERESOperator body", aText)
  where
   (pBody, pRest) = TL.breakOn ">" aText
   coReader key op body = Just (op, fromJust . TL.stripPrefix key $ body)
@@ -61,6 +61,10 @@ parseCERESOperatorSub aText = if TL.null pRest
     | TL.isPrefixOf "A:" pBody = Right (COA (customCOReader "A:"), pRest)
     | TL.isPrefixOf "R:" pBody = Right (COR (customCOReader "R:"), pRest)
     | TL.isPrefixOf "T:" pBody = Right (COT (customCOReader "T:"), pRest)
-    | otherwise = Left ("[Fail] Reading Custom CERESOperator body", aText)
+    | TL.isPrefixOf "E1:" pBody = Right (COE1 (customCOReader "E1:"), pRest)
+    | TL.isPrefixOf "E2:" pBody = Right (COE2 (customCOReader "E2:"), pRest)
+    | TL.isPrefixOf "E3:" pBody = Right (COE3 (customCOReader "E3:"), pRest)
+    | TL.isPrefixOf "E4:" pBody = Right (COE4 (customCOReader "E4:"), pRest)
+    | otherwise = Left ("[Fail] Reading Custom CERESOperator body@CCO", aText)
   customCOReader header =
     TL.toStrict . fromJust . TL.stripPrefix header $ pBody

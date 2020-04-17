@@ -7,6 +7,12 @@ Changelog for CEREScript-Core01-Parser
 * Use ready-made parser package
 
 
+## 0.0.5.1 -- 2020-04-17
+
+### Fixed
+* Fix `parseCERESOperator` which works oppositely
+
+
 ## 0.0.5.0 -- 2020-04-16
 
 ### Changed
