@@ -328,7 +328,7 @@ parseCERES aText = case pHeader of
       >>= readCERESDelimiter
       >>= addVariablePosition
   "Noop" -> ceresHeaderWrapper CRSNoop
-  _ -> Left ("[Fail] No such CERES Header",aText)
+  _      -> Left ("[Fail] No such CERES Header", aText)
  where
   (pHeader, pRest) = T.breakOn " " aText
   ceresHeaderWrapper cH =

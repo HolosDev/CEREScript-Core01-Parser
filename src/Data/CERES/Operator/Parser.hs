@@ -58,9 +58,9 @@ parseCERESOperatorSub aText = if TL.null pRest
   (pBody, pRest) = TL.breakOn ">" aText
   coReader key op body = Just (op, fromJust . TL.stripPrefix key $ body)
   readCustomCO
-    | TL.isPrefixOf "A:" pBody = Right (COA (customCOReader "A:"), pRest)
-    | TL.isPrefixOf "R:" pBody = Right (COR (customCOReader "R:"), pRest)
-    | TL.isPrefixOf "T:" pBody = Right (COT (customCOReader "T:"), pRest)
+    | TL.isPrefixOf "A:" pBody  = Right (COA (customCOReader "A:"), pRest)
+    | TL.isPrefixOf "R:" pBody  = Right (COR (customCOReader "R:"), pRest)
+    | TL.isPrefixOf "T:" pBody  = Right (COT (customCOReader "T:"), pRest)
     | TL.isPrefixOf "E1:" pBody = Right (COE1 (customCOReader "E1:"), pRest)
     | TL.isPrefixOf "E2:" pBody = Right (COE2 (customCOReader "E2:"), pRest)
     | TL.isPrefixOf "E3:" pBody = Right (COE3 (customCOReader "E3:"), pRest)
