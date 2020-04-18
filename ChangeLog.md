@@ -9,6 +9,9 @@ Changelog for CEREScript-Core01-Parser
 
 ## 0.0.6.0 -- 2020-04-19
 
+### Added
+* Helper functions for equivalent testing easily
+
 ### Changed
 * Redesign CERES parser because of change in CEREScript-Core01 v0.18.0.0 (Fix design of extendable instructions)
 
