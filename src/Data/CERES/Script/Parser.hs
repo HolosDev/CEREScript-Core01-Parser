@@ -137,25 +137,19 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
   "ToInterpreter1" ->
     ceresHeaderWrapper CRSToInterpreter1
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
   "ToInterpreter2" ->
     ceresHeaderWrapper CRSToInterpreter2
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
       >>= readCERESDelimiter
       >>= addVariablePosition
   "ToInterpreter3" ->
     ceresHeaderWrapper CRSToInterpreter3
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
       >>= readCERESDelimiter
@@ -164,9 +158,7 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
   "ToInterpreter4" ->
     ceresHeaderWrapper CRSToInterpreter4
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
       >>= readCERESDelimiter
@@ -177,9 +169,7 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
   "ToInterpreter5" ->
     ceresHeaderWrapper CRSToInterpreter5
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
       >>= readCERESDelimiter
@@ -192,9 +182,7 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
   "ToInterpreter6" ->
     ceresHeaderWrapper CRSToInterpreter6
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
       >>= readCERESDelimiter
@@ -209,9 +197,7 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
   "ToInterpreter7" ->
     ceresHeaderWrapper CRSToInterpreter7
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
       >>= readCERESDelimiter
@@ -228,9 +214,7 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
   "ToInterpreter8" ->
     ceresHeaderWrapper CRSToInterpreter8
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
       >>= readCERESDelimiter
@@ -249,25 +233,19 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
   "Extend1" ->
     ceresHeaderWrapper CRSExtend1
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
   "Extend2" ->
     ceresHeaderWrapper CRSExtend2
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
       >>= readCERESDelimiter
       >>= addVariablePosition
   "Extend3" ->
     ceresHeaderWrapper CRSExtend3
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
       >>= readCERESDelimiter
@@ -276,9 +254,7 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
   "Extend4" ->
     ceresHeaderWrapper CRSExtend4
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
       >>= readCERESDelimiter
@@ -289,9 +265,7 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
   "Extend5" ->
     ceresHeaderWrapper CRSExtend5
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
       >>= readCERESDelimiter
@@ -304,9 +278,7 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
   "Extend6" ->
     ceresHeaderWrapper CRSExtend6
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
       >>= readCERESDelimiter
@@ -321,9 +293,7 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
   "Extend7" ->
     ceresHeaderWrapper CRSExtend7
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
       >>= readCERESDelimiter
@@ -340,9 +310,7 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
   "Extend8" ->
     ceresHeaderWrapper CRSExtend8
-      >>= addIHeader
-      >>= readCERESDelimiter
-      >>= addIContent
+      >>= addCHeader
       >>= readCERESDelimiter
       >>= addVariablePosition
       >>= readCERESDelimiter
@@ -360,6 +328,7 @@ parseCERES aText = case pHeader of
       >>= readCERESDelimiter
       >>= addVariablePosition
   "Noop" -> ceresHeaderWrapper CRSNoop
+  _ -> Left ("[Fail] No such CERES Header",aText)
  where
   (pHeader, pRest) = T.breakOn " " aText
   ceresHeaderWrapper cH =
@@ -369,15 +338,9 @@ parseCERES aText = case pHeader of
   addVariablePosition = readAppliable parseVariablePosition
   addValueType        = readAppliable parseValueType
   addCERESOperator    = readAppliable parseCERESOperator
-  addIHeader          = readAppliable parseIHeader
-  addIContent         = readAppliable parseIContent
+  addCHeader          = readAppliable parseCHeader
 
-parseIHeader aText = if T.null pRest
-  then Left ("[Fail] Reading CERES IHeader fails", aText)
+parseCHeader aText = if T.null pRest
+  then Left ("[Fail] Reading CERES CHeader fails", aText)
   else Right (T.toStrict pHeader, pRest)
   where (pHeader, pRest) = T.breakOn " " aText
-
-parseIContent aText = if T.null pRest
-  then Left ("[Fail] Reading CERES IContent fails", aText)
-  else Right (T.toStrict pContent, pRest)
-  where (pContent, pRest) = T.breakOn " " aText
