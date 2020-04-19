@@ -85,6 +85,11 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
       >>= readCERESDelimiter
       >>= addVariablePosition
+  "SetVPosition" ->
+    ceresHeaderWrapper CRSSetVPosition
+      >>= addVariablePosition
+      >>= readCERESDelimiter
+      >>= addVariablePosition
   "Random" ->
     ceresHeaderWrapper CRSRandom
       >>= addVariablePosition
