@@ -1,4 +1,4 @@
-Changelog for CEREScript-Core01-Parser
+Changelog for CEREScript-SS-Parser
 ====
 
 ## Unreleased
@@ -13,7 +13,7 @@ Changelog for CEREScript-Core01-Parser
 * Helper functions for equivalent testing easily
 
 ### Changed
-* Redesign CERES parser because of change in CEREScript-Core01 v0.18.0.0 (Fix design of extendable instructions)
+* Redesign CERES parser because of change in old CEREScript-Core01 v0.18.0.0 (Fix design of extendable instructions)
 
 
 ## 0.0.5.1 -- 2020-04-17
@@ -25,7 +25,7 @@ Changelog for CEREScript-Core01-Parser
 ## 0.0.5.0 -- 2020-04-16
 
 ### Changed
-* Redesign CERES parser because of change in CEREScript-Core01 v0.17.3.0
+* Redesign CERES parser because of change in old CEREScript-Core01 v0.17.3.0
 
 ### Fixed
 * Fix small bugs
@@ -35,13 +35,13 @@ Changelog for CEREScript-Core01-Parser
 
 ### Changed
 * Unify VariablePosition and Value modules to resolve mutual reference
-* Rename imported modules because of change in CEREScript-Core01 v0.16.1.0
+* Rename imported modules because of change in old CEREScript-Core01 v0.16.1.0
 
 
 ## 0.0.4.1 -- 2020-04-14
 
 ### Changed
-* Rename imported modules because of change in CEREScript-Core01 v0.16.0.0
+* Rename imported modules because of change in old CEREScript-Core01 v0.16.0.0
 
 
 ## 0.0.4.0 -- 2020-04-14

@@ -1,6 +1,6 @@
-name:                CEREScript-Core01-Parser
+name:                CEREScript-SS-Parser
 version:             0.0.6.0
-github:              "HolosDev/CEREScript-Core01-Parser"
+github:              "HolosDev/CEREScript-SS-Parser"
 license:             OtherLicense
 author:              "YongJoon Joe"
 maintainer:          "Holos Works <developer@holos.dev>"
@@ -10,7 +10,7 @@ extra-source-files:
 - README.md
 - ChangeLog.md
 
-description:         Please see the README on GitHub at <https://github.com/HolosDev/CEREScript-Core01-Parser#readme>
+description:         Please see the README on GitHub at <https://github.com/HolosDev/CEREScript-SS-Parser#readme>
 
 dependencies:
 - base >= 4.7 && < 5
@@ -20,7 +20,7 @@ dependencies:
 - text-show-instances
 - text-trie
 - vector
-- CEREScript-Core01
+- CEREScript-SS
 
 default-extensions:
 - OverloadedStrings
@@ -43,7 +43,7 @@ tests:
     - TemplateHaskell
     - OverloadedStrings
     dependencies:
-    - CEREScript-Core01-Parser
+    - CEREScript-SS-Parser
     - HUnit
     - QuickCheck
     - silently

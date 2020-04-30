@@ -1,12 +1,12 @@
-CEREScript-Core01-Parser
+CEREScript-SuperSet-Parser
 ====
 
-Parser of CEREScript-Core01
+Parser of CEREScript-SuperSet
 
-This would be imported as a part of CEREScript-Core01, but not yet.
-After the code base are imported by CEREScript-Core01, this package would remains for experimental research.
+This would be imported as a part of CEREScript-SuperSet, but not yet.
+After the code base are imported by CEREScript-SuperSet, this package would remains for experimental research.
 
 ## Policy
 ### Versioning
 
-After CEREScript is stabilized, version of CEREScript-Core01 and CEREScript-Core01-Parser would be coupled.
+After CEREScript is stabilized, version of CEREScript-SuperSet and CEREScript-SuperSet-Parser would be coupled.
