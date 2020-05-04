@@ -117,6 +117,7 @@ readVType aText = if TL.isPrefixOf "A[|| " aText
     "BV" -> Right (VTBool, pRest)
     "AV" -> Right (VTAtom, pRest)
     "PV" -> Right (VTPtr, pRest)
+    "CV" -> Right (VTScr, pRest)
     "EV" -> Right (VTErr, pRest)
     _    -> Left ("[Fail] Reading Header fails", pHeader)
 
@@ -132,6 +133,7 @@ readValue (vType, pRest) = if vType == VTArr
     VTBool -> eBoolValueReader pRest
     VTAtom -> eAtomValueReader pRest
     VTPtr  -> ePtrValueReader pRest
+    VTScr  -> eScrValueReader pRest
     VTErr  -> eErrValueReader pRest
     _      -> error "[ERROR]<readValue> Can't be reached"
 
@@ -167,6 +169,8 @@ eErrValueReader = convertResult ErrValue
   . readTextWrapper "[Fail] Reading ErrValue from body fails"
 
 ePtrValueReader = convertResult PtrValue . parseVariablePosition
+
+eScrValueReader = error "[Fail] Not yet implemented before integrate Variable.Parser and Script.Parser modules"
 
 
 -- TODO: Make more monadic
@@ -217,6 +221,7 @@ readValueType aText
   | TL.isPrefixOf "CAtom" aText = vtReader "CAtom" VTAtom aText
   | TL.isPrefixOf "C-Arr" aText = vtReader "C-Arr" VTArr aText
   | TL.isPrefixOf "C-Str" aText = vtReader "C-Str" VTStr aText
+  | TL.isPrefixOf "C-Scr" aText = vtReader "C-Scr" VTScr aText
   | TL.isPrefixOf "C-Err" aText = vtReader "C-Err" VTErr aText
   | otherwise                   = Nothing
   where vtReader key vt body = Just (vt, fromJust . TL.stripPrefix key $ body)
