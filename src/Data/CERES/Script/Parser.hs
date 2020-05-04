@@ -52,8 +52,8 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
   "DeleteVariable" ->
     ceresHeaderWrapper CRSDeleteVariable >>= addVariablePosition
-  "ModifyValue" ->
-    ceresHeaderWrapper CRSModifyValue
+  "ModifyValue2" ->
+    ceresHeaderWrapper CRSModifyValue2
       >>= addVariablePosition
       >>= readCERESDelimiter
       >>= addVariablePosition
@@ -135,6 +135,8 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
   "SIInit" ->
     ceresHeaderWrapper CRSSIInit
+      >>= addVariablePosition
+      >>= readCERESDelimiter
       >>= addVariablePosition
       >>= readCERESDelimiter
       >>= addVariablePosition
