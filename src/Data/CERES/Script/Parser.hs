@@ -1,6 +1,8 @@
 module Data.CERES.Script.Parser where
 
 
+import           Control.Monad
+
 import           Data.Maybe
 import           Data.Text.Lazy                 ( Text )
 import qualified Data.Text.Lazy                as T
@@ -38,32 +40,27 @@ parseCERES aText = case pHeader of
   "InitVariable" ->
     ceresHeaderWrapper CRSInitVariable
       >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
   "InitVariableAt" ->
     ceresHeaderWrapper CRSInitVariableAt
       >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
   "SetValue" ->
     ceresHeaderWrapper CRSSetValue
       >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
   "DeleteVariable" ->
     ceresHeaderWrapper CRSDeleteVariable >>= addVariablePosition
   "ModifyValue2" ->
     ceresHeaderWrapper CRSModifyValue2
       >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
       >>= readCERESDelimiter
       >>= addCERESOperator
   "CopyValue" ->
     ceresHeaderWrapper CRSCopyValue
       >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
   "ConvertValue" ->
     ceresHeaderWrapper CRSConvertValue
       >>= addVariablePosition
@@ -72,24 +69,20 @@ parseCERES aText = case pHeader of
   "ConvertValueBy" ->
     ceresHeaderWrapper CRSConvertValueBy
       >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
   "ConvertValueWith" ->
     ceresHeaderWrapper CRSConvertValueWith
       >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
   "ReplaceText" -> ceresHeaderWrapper CRSReplaceText >>= addVariablePosition
   "ReplaceTextTo" ->
     ceresHeaderWrapper CRSReplaceTextTo
       >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
   "SetVPosition" ->
     ceresHeaderWrapper CRSSetVPosition
       >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
   "Random" ->
     ceresHeaderWrapper CRSRandom
       >>= addVariablePosition
@@ -98,254 +91,166 @@ parseCERES aText = case pHeader of
   "RandomBy" ->
     ceresHeaderWrapper CRSRandomBy
       >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
   "RandomWith" ->
     ceresHeaderWrapper CRSRandomWith
       >>= addVariablePosition
       >>= readCERESDelimiter
       >>= addValueType
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "RandomWithBy" ->
     ceresHeaderWrapper CRSRandomWithBy
       >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "ElapseTime" ->
     ceresHeaderWrapper CRSElapseTime
       >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
   "SPControl" -> ceresHeaderWrapper CRSSPControl >>= addVariablePosition
   "SIControl" ->
     ceresHeaderWrapper CRSSIControl
       >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
   "SIInit" ->
     ceresHeaderWrapper CRSSIInit
       >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "ToInterpreter1" ->
-    ceresHeaderWrapper CRSToInterpreter1
-      >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+    ceresHeaderWrapper CRSToInterpreter1 >>= addCHeader >>= moreVariablePosition
   "ToInterpreter2" ->
     ceresHeaderWrapper CRSToInterpreter2
       >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "ToInterpreter3" ->
     ceresHeaderWrapper CRSToInterpreter3
       >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "ToInterpreter4" ->
     ceresHeaderWrapper CRSToInterpreter4
       >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "ToInterpreter5" ->
     ceresHeaderWrapper CRSToInterpreter5
       >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "ToInterpreter6" ->
     ceresHeaderWrapper CRSToInterpreter6
       >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "ToInterpreter7" ->
     ceresHeaderWrapper CRSToInterpreter7
       >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "ToInterpreter8" ->
     ceresHeaderWrapper CRSToInterpreter8
       >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "Extend1" ->
-    ceresHeaderWrapper CRSExtend1
-      >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+    ceresHeaderWrapper CRSExtend1 >>= addCHeader >>= moreVariablePosition
   "Extend2" ->
     ceresHeaderWrapper CRSExtend2
       >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "Extend3" ->
     ceresHeaderWrapper CRSExtend3
       >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "Extend4" ->
     ceresHeaderWrapper CRSExtend4
       >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "Extend5" ->
     ceresHeaderWrapper CRSExtend5
       >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "Extend6" ->
     ceresHeaderWrapper CRSExtend6
       >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "Extend7" ->
     ceresHeaderWrapper CRSExtend7
       >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "Extend8" ->
     ceresHeaderWrapper CRSExtend8
       >>= addCHeader
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
-      >>= readCERESDelimiter
-      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
+      >>= moreVariablePosition
   "Noop" -> ceresHeaderWrapper CRSNoop
   _      -> Left ("[Fail] No such CERES Header", aText)
  where
   (pHeader, pRest) = T.breakOn " " aText
   ceresHeaderWrapper cH =
     findPattern " " "[Fail] Reading CERES Header fails" (cH, pRest)
-  parseValueType      = readValueTypeWrapper
-  readCERESDelimiter  = findPattern " " "[Fail] Reading CERES delimiter"
-  addVariablePosition = readAppliable parseVariablePosition
-  addValueType        = readAppliable parseValueType
-  addCERESOperator    = readAppliable parseCERESOperator
-  addCHeader          = readAppliable parseCHeader
+  parseValueType       = readValueTypeWrapper
+  readCERESDelimiter   = findPattern " " "[Fail] Reading CERES delimiter"
+  addVariablePosition  = readAppliable parseVariablePosition
+  addValueType         = readAppliable parseValueType
+  addCERESOperator     = readAppliable parseCERESOperator
+  addCHeader           = readAppliable parseCHeader
+  moreVariablePosition = readCERESDelimiter >=> addVariablePosition
 
 parseCHeader aText = if T.null pRest
   then Left ("[Fail] Reading CERES CHeader fails", aText)

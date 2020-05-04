@@ -57,107 +57,46 @@ readVariableIndex aText = maybeNext (maybeNext eVI VINull mVINull)
   (pHeader, pRest) = TL.breakOn "=" aText
   viWrapper vi = findPattern "=" "[Fail] Reading VI Opener fails" (vi, pRest)
   eVI = case pHeader of
-    "VII"  -> viWrapper VII >>= readAppliable readIdx
-    "VIN"  -> viWrapper VIN >>= readAppliable readQuotedNKey
-    "VIpN" -> viWrapper VIpN >>= readAppliable readQuotedNKey
-    "VIIT" ->
-      viWrapper VIIT
-        >>= readAppliable readIdx
-        >>= readVIDelimiter
-        >>= readAppliable readTime
-    "VINT" ->
-      viWrapper VINT
-        >>= readAppliable readQuotedNKey
-        >>= readVIDelimiter
-        >>= readAppliable readTime
-    "VIpNT" ->
-      viWrapper VIpNT
-        >>= readAppliable readQuotedNKey
-        >>= readVIDelimiter
-        >>= readAppliable readTime
-    "VIIRI" ->
-      viWrapper VIIRI
-        >>= readAppliable readIdx
-        >>= readVIDelimiter
-        >>= readAppliable readIndices
-    "VINRI" ->
-      viWrapper VINRI
-        >>= readAppliable readQuotedNKey
-        >>= readVIDelimiter
-        >>= readAppliable readIndices
-    "VIpNRI" ->
-      viWrapper VIpNRI
-        >>= readAppliable readQuotedNKey
-        >>= readVIDelimiter
-        >>= readAppliable readIndices
-    "VIIRIT" ->
-      viWrapper VIIRIT
-        >>= readAppliable readIdx
-        >>= readVIDelimiter
-        >>= readAppliable readIndices
-        >>= readVIDelimiter
-        >>= readAppliable readTime
-    "VINRIT" ->
-      viWrapper VINRIT
-        >>= readAppliable readQuotedNKey
-        >>= readVIDelimiter
-        >>= readAppliable readIndices
-        >>= readVIDelimiter
-        >>= readAppliable readTime
+    "VII"    -> viWrapper VII >>= addIdx
+    "VIN"    -> viWrapper VIN >>= addQuotedNKey
+    "VIpN"   -> viWrapper VIpN >>= addQuotedNKey
+    "VIIT"   -> viWrapper VIIT >>= addIdx >>= moreTime
+    "VINT"   -> viWrapper VINT >>= addQuotedNKey >>= moreTime
+    "VIpNT"  -> viWrapper VIpNT >>= addQuotedNKey >>= moreTime
+    "VIIRI"  -> viWrapper VIIRI >>= addIdx >>= moreIndices
+    "VINRI"  -> viWrapper VINRI >>= addQuotedNKey >>= moreIndices
+    "VIpNRI" -> viWrapper VIpNRI >>= addQuotedNKey >>= moreIndices
+    "VIIRIT" -> viWrapper VIIRIT >>= addIdx >>= moreIndices >>= moreTime
+    "VINRIT" -> viWrapper VINRIT >>= addQuotedNKey >>= moreIndices >>= moreTime
     "VIpNRIT" ->
-      viWrapper VIpNRIT
-        >>= readAppliable readQuotedNKey
-        >>= readVIDelimiter
-        >>= readAppliable readIndices
-        >>= readVIDelimiter
-        >>= readAppliable readTime
-    "VIV"   -> viWrapper VIV >>= readAppliable parseValue
-    "VIPtr" -> viWrapper VIPtr >>= readAppliable parseVariablePosition
-    "PVII"  -> viWrapper PVII >>= readAppliable readIdx
-    "PVIN"  -> viWrapper PVIN >>= readAppliable readQuotedNKey
-    "PVIpN" -> viWrapper PVIpN >>= readAppliable readQuotedNKey
-    "PVIT"  -> viWrapper PVIT >>= readAppliable readTime
-    "PVIIRI" ->
-      viWrapper PVIIRI
-        >>= readAppliable readIdx
-        >>= readVIDelimiter
-        >>= readAppliable readIndices
-    "PVINRI" ->
-      viWrapper PVINRI
-        >>= readAppliable readQuotedNKey
-        >>= readVIDelimiter
-        >>= readAppliable readIndices
-    "PVIpNRI" ->
-      viWrapper PVIpNRI
-        >>= readAppliable readQuotedNKey
-        >>= readVIDelimiter
-        >>= readAppliable readIndices
-    "PVIIRIT" ->
-      viWrapper PVIIRIT
-        >>= readAppliable readIdx
-        >>= readVIDelimiter
-        >>= readAppliable readIndices
-        >>= readVIDelimiter
-        >>= readAppliable readTime
+      viWrapper VIpNRIT >>= addQuotedNKey >>= moreIndices >>= moreTime
+    "VIV"     -> viWrapper VIV >>= readAppliable parseValue
+    "VIPtr"   -> viWrapper VIPtr >>= readAppliable parseVariablePosition
+    "PVII"    -> viWrapper PVII >>= addIdx
+    "PVIN"    -> viWrapper PVIN >>= addQuotedNKey
+    "PVIpN"   -> viWrapper PVIpN >>= addQuotedNKey
+    "PVIT"    -> viWrapper PVIT >>= addTime
+    "PVIIRI"  -> viWrapper PVIIRI >>= addIdx >>= moreIndices
+    "PVINRI"  -> viWrapper PVINRI >>= addQuotedNKey >>= moreIndices
+    "PVIpNRI" -> viWrapper PVIpNRI >>= addQuotedNKey >>= moreIndices
+    "PVIIRIT" -> viWrapper PVIIRIT >>= addIdx >>= moreIndices >>= moreTime
     "PVINRIT" ->
-      viWrapper PVINRIT
-        >>= readAppliable readQuotedNKey
-        >>= readVIDelimiter
-        >>= readAppliable readIndices
-        >>= readVIDelimiter
-        >>= readAppliable readTime
+      viWrapper PVINRIT >>= addQuotedNKey >>= moreIndices >>= moreTime
     "PVIpNRIT" ->
-      viWrapper PVIpNRIT
-        >>= readAppliable readQuotedNKey
-        >>= readVIDelimiter
-        >>= readAppliable readIndices
-        >>= readVIDelimiter
-        >>= readAppliable readTime
+      viWrapper PVIpNRIT >>= addQuotedNKey >>= moreIndices >>= moreTime
     _ -> Left ("[Fail] Reading VariableIndex fails", aText)
   readIdx         = readIntWrapper "[Fail] Reading Idx fails"
   readTime        = readIntWrapper "[Fail] Reading Time fails"
   readIndices     = eIntListReader
   readVIDelimiter = findPattern ":" "[Fail] Reading VI delimiter"
+  addIdx          = readAppliable readIdx
+  addTime         = readAppliable readTime
+  addIndices      = readAppliable readIndices
+  addValue        = readAppliable parseValue
+  addQuotedNKey   = readAppliable readQuotedNKey
+  moreIdx         = readVIDelimiter >=> addIdx
+  moreTime        = readVIDelimiter >=> addTime
+  moreIndices     = readVIDelimiter >=> addIndices
 
 
 parseValue :: Text -> Result Value
@@ -214,7 +153,9 @@ eAtomValueReader aText = if TL.isPrefixOf "-" aText
   else Left ("[Fail] Reading AtomValue from body fails", aText)
 
 readText :: Text -> Maybe (T.Text, Text)
-readText aText = if TL.null pRest then Nothing else Just (TL.toStrict pStr, pRest)
+readText aText = if TL.null pRest
+  then Nothing
+  else Just (TL.toStrict pStr, pRest)
   where (pStr, pRest) = TL.breakOn " |>" aText
 
 readTextWrapper :: Message -> Text -> Result T.Text
