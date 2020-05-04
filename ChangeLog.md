@@ -7,6 +7,13 @@ Changelog for CEREScript-SS-Parser
 * Use ready-made parser package
 
 
+## 0.0.7.0 -- 2020-05-05
+
+### Added
+* Add more monadic shorthand functions
+* Add more instruction parsing features of `parseCERES`
+
+
 ## 0.0.6.0 -- 2020-04-19
 
 ### Added
