@@ -51,12 +51,25 @@ parseCERES aText = case pHeader of
       >>= moreVariablePosition
   "DeleteVariable" ->
     ceresHeaderWrapper CRSDeleteVariable >>= addVariablePosition
+  "CheckVariable" ->
+    ceresHeaderWrapper CRSCheckVariable
+      >>= addVariablePosition
+      >>= moreVariablePosition
+  "ModifyValue1" ->
+    ceresHeaderWrapper CRSModifyValue1
+      >>= addVariablePosition
+      >>= moreCERESOperator
   "ModifyValue2" ->
     ceresHeaderWrapper CRSModifyValue2
       >>= addVariablePosition
       >>= moreVariablePosition
-      >>= readCERESDelimiter
-      >>= addCERESOperator
+      >>= moreCERESOperator
+  "ModifyValue3" ->
+    ceresHeaderWrapper CRSModifyValue3
+      >>= addVariablePosition
+      >>= moreVariablePosition
+      >>= moreCERESOperator
+      >>= moreVariablePosition
   "CopyValue" ->
     ceresHeaderWrapper CRSCopyValue
       >>= addVariablePosition
@@ -77,6 +90,10 @@ parseCERES aText = case pHeader of
   "ReplaceText" -> ceresHeaderWrapper CRSReplaceText >>= addVariablePosition
   "ReplaceTextTo" ->
     ceresHeaderWrapper CRSReplaceTextTo
+      >>= addVariablePosition
+      >>= moreVariablePosition
+  "GetVPosition" ->
+    ceresHeaderWrapper CRSGetVPosition
       >>= addVariablePosition
       >>= moreVariablePosition
   "SetVPosition" ->
@@ -121,6 +138,14 @@ parseCERES aText = case pHeader of
       >>= addVariablePosition
       >>= moreVariablePosition
       >>= moreVariablePosition
+      >>= moreVariablePosition
+  "SIEnd" -> ceresHeaderWrapper CRSSIEnd >>= addVariablePosition
+  "Noop"  -> ceresHeaderWrapper CRSNoop
+  "Log" ->
+    ceresHeaderWrapper CRSLog >>= addVariablePosition >>= moreVariablePosition
+  "ParseScript" ->
+    ceresHeaderWrapper CRSParseScript
+      >>= addVariablePosition
       >>= moreVariablePosition
   "ToInterpreter1" ->
     ceresHeaderWrapper CRSToInterpreter1 >>= addCHeader >>= moreVariablePosition
@@ -238,8 +263,7 @@ parseCERES aText = case pHeader of
       >>= moreVariablePosition
       >>= moreVariablePosition
       >>= moreVariablePosition
-  "Noop" -> ceresHeaderWrapper CRSNoop
-  _      -> Left ("[Fail] No such CERES Header", aText)
+  _ -> Left ("[Fail] No such CERES Header", aText)
  where
   (pHeader, pRest) = T.breakOn " " aText
   ceresHeaderWrapper cH =
@@ -251,6 +275,7 @@ parseCERES aText = case pHeader of
   addCERESOperator     = readAppliable parseCERESOperator
   addCHeader           = readAppliable parseCHeader
   moreVariablePosition = readCERESDelimiter >=> addVariablePosition
+  moreCERESOperator    = readCERESDelimiter >=> addCERESOperator
 
 parseCHeader aText = if T.null pRest
   then Left ("[Fail] Reading CERES CHeader fails", aText)
