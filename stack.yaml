@@ -2,11 +2,17 @@ resolver: lts-14.27
 
 packages:
 - .
+# In development
+#- /AoDw/CEREScript/ArchCEREScript
+#- /AoDw/CEREScript/CEREScript-SS00
 
 extra-deps:
 - text-trie-0.2.5.0
 - splitmix-0.0.4
-- github: HolosDev/CEREScript-Core01
-#- git: https://gitlab.com/holosdev/CEREScript-Core01
-- git: https://gitlab.com/holosdev/CEREScript-Core01
-  commit: 88519609a5b06a1dc7842904f1b4163fc0ca22d2
+# In public
+#- github: HolosDev/ArchCEREScript
+#- git: https://gitlab.com/holosdev/ArchCEREScript
+#  commit: 88519609a5b06a1dc7842904f1b4163fc0ca22d2
+- github: HolosDev/CEREScript-SS
+#- git: https://gitlab.com/holosdev/CEREScript-SS
+  commit: 3cdec61a527b5523e1f416be2619a0345dc707fe

@@ -7,8 +7,9 @@ import           Data.Bifunctor
 import           Data.Either
 import qualified Data.IntMap                   as IM
 import           Data.Maybe
+import qualified Data.Text                     as T
 import           Data.Text.Lazy                 ( Text )
-import qualified Data.Text.Lazy                as T
+import qualified Data.Text.Lazy                as TL
 import qualified Data.Text.Lazy.Read           as TR
 
 import           Data.CERES.Type
@@ -44,16 +45,16 @@ readVariablePlace aText = case pHeader of
   "AtHere"   -> Right (AtHere, pRest)
   "AtNull"   -> Right (AtNull, pRest)
   _          -> Left ("[Fail] No such VariablePlace", aText)
-  where (pHeader, pRest) = T.breakOn "[" aText
+  where (pHeader, pRest) = TL.breakOn "[" aText
 
 readVariableIndex :: Text -> Result VariableIndex
 readVariableIndex aText = maybeNext (maybeNext eVI VINull mVINull)
                                     VIAtom
                                     mVIAtom
  where
-  mVIAtom          = T.stripPrefix "VIAtom" aText
-  mVINull          = T.stripPrefix "VINull" aText
-  (pHeader, pRest) = T.breakOn "=" aText
+  mVIAtom          = TL.stripPrefix "VIAtom" aText
+  mVINull          = TL.stripPrefix "VINull" aText
+  (pHeader, pRest) = TL.breakOn "=" aText
   viWrapper vi = findPattern "=" "[Fail] Reading VI Opener fails" (vi, pRest)
   eVI = case pHeader of
     "VII"  -> viWrapper VII >>= readAppliable readIdx
@@ -165,11 +166,11 @@ parseValue aText = readVType aText >>= readValue
 -- TODO: Split as readVType and readOpener
 
 readVType :: Text -> Result ValueType
-readVType aText = if T.isPrefixOf "A[|| " aText
-  then Right (VTArr, fromJust . T.stripPrefix "A[|| " $ aText)
+readVType aText = if TL.isPrefixOf "A[|| " aText
+  then Right (VTArr, fromJust . TL.stripPrefix "A[|| " $ aText)
   else maybe (Left ("[Fail]<getValue> Not have \"<| \"", pHeader)) rVType mPRest
  where
-  (pHeader, mPRest) = second (T.stripPrefix "<| ") . T.breakOn "<| " $ aText
+  (pHeader, mPRest) = second (TL.stripPrefix "<| ") . TL.breakOn "<| " $ aText
   rVType pRest = case pHeader of
     "IV" -> Right (VTInt, pRest)
     "DV" -> Right (VTDbl, pRest)
@@ -208,15 +209,15 @@ eBoolValueReader :: Text -> Result Value
 eBoolValueReader = convertResult BoolValue
   . readBoolWrapper "[Fail] Reading BoolValue from body fails"
 
-eAtomValueReader aText = if T.isPrefixOf "-" aText
-  then Right (AtomValue, T.tail aText)
+eAtomValueReader aText = if TL.isPrefixOf "-" aText
+  then Right (AtomValue, TL.tail aText)
   else Left ("[Fail] Reading AtomValue from body fails", aText)
 
-readText :: Text -> Maybe (Text, Text)
-readText aText = if T.null pRest then Nothing else Just (pStr, pRest)
-  where (pStr, pRest) = T.breakOn " |>" aText
+readText :: Text -> Maybe (T.Text, Text)
+readText aText = if TL.null pRest then Nothing else Just (TL.toStrict pStr, pRest)
+  where (pStr, pRest) = TL.breakOn " |>" aText
 
-readTextWrapper :: Message -> Text -> Result Text
+readTextWrapper :: Message -> Text -> Result T.Text
 readTextWrapper msg aText = maybe (Left (msg, aText)) Right (readText aText)
 
 eStrValueReader = convertResult StrValue
@@ -230,7 +231,7 @@ ePtrValueReader = convertResult PtrValue . parseVariablePosition
 -- TODO: Make more monadic
 
 eArrValueReader :: Text -> Result Value
-eArrValueReader aText = eArrValueReaderSub IM.empty (T.append " || " aText)
+eArrValueReader aText = eArrValueReaderSub IM.empty (TL.append " || " aText)
 eArrValueReaderSub im aText
   | isRight shownItem = eArrValueReaderSub (IM.insert idx item im) aItemRest
   | isRight shownEnd  = Right (ArrValue im, aEndRest)
@@ -268,12 +269,13 @@ readValueTypeWrapper =
   readWrapper "[Fail] Reading ValueType fails" readValueType
 
 readValueType :: Text -> Maybe (ValueType, Text)
-readValueType aText | T.isPrefixOf "C-Int" aText = vtReader "C-Int" VTInt aText
-                    | T.isPrefixOf "C-Dbl" aText = vtReader "C-Dbl" VTDbl aText
-                    | T.isPrefixOf "CBool" aText = vtReader "CBool" VTBool aText
-                    | T.isPrefixOf "CAtom" aText = vtReader "CAtom" VTAtom aText
-                    | T.isPrefixOf "C-Arr" aText = vtReader "C-Arr" VTArr aText
-                    | T.isPrefixOf "C-Str" aText = vtReader "C-Str" VTStr aText
-                    | T.isPrefixOf "C-Err" aText = vtReader "C-Err" VTErr aText
-                    | otherwise                  = Nothing
-  where vtReader key vt body = Just (vt, fromJust . T.stripPrefix key $ body)
+readValueType aText
+  | TL.isPrefixOf "C-Int" aText = vtReader "C-Int" VTInt aText
+  | TL.isPrefixOf "C-Dbl" aText = vtReader "C-Dbl" VTDbl aText
+  | TL.isPrefixOf "CBool" aText = vtReader "CBool" VTBool aText
+  | TL.isPrefixOf "CAtom" aText = vtReader "CAtom" VTAtom aText
+  | TL.isPrefixOf "C-Arr" aText = vtReader "C-Arr" VTArr aText
+  | TL.isPrefixOf "C-Str" aText = vtReader "C-Str" VTStr aText
+  | TL.isPrefixOf "C-Err" aText = vtReader "C-Err" VTErr aText
+  | otherwise                   = Nothing
+  where vtReader key vt body = Just (vt, fromJust . TL.stripPrefix key $ body)
