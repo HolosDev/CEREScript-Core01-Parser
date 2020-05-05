@@ -40,40 +40,40 @@ parseCERES aText = case pHeader of
   "InitVariable" ->
     ceresHeaderWrapper CRSInitVariable
       >>= addVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
   "InitVariableAt" ->
     ceresHeaderWrapper CRSInitVariableAt
       >>= addVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
   "SetValue" ->
     ceresHeaderWrapper CRSSetValue
       >>= addVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
   "DeleteVariable" ->
     ceresHeaderWrapper CRSDeleteVariable >>= addVariablePosition
   "CheckVariable" ->
     ceresHeaderWrapper CRSCheckVariable
       >>= addVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
   "ModifyValue1" ->
     ceresHeaderWrapper CRSModifyValue1
       >>= addVariablePosition
-      >>= moreCERESOperator
+      >>= andCERESOperator
   "ModifyValue2" ->
     ceresHeaderWrapper CRSModifyValue2
       >>= addVariablePosition
-      >>= moreVariablePosition
-      >>= moreCERESOperator
+      >>= andVariablePosition
+      >>= andCERESOperator
   "ModifyValue3" ->
     ceresHeaderWrapper CRSModifyValue3
       >>= addVariablePosition
-      >>= moreVariablePosition
-      >>= moreCERESOperator
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andCERESOperator
+      >>= andVariablePosition
   "CopyValue" ->
     ceresHeaderWrapper CRSCopyValue
       >>= addVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
   "ConvertValue" ->
     ceresHeaderWrapper CRSConvertValue
       >>= addVariablePosition
@@ -82,24 +82,24 @@ parseCERES aText = case pHeader of
   "ConvertValueBy" ->
     ceresHeaderWrapper CRSConvertValueBy
       >>= addVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
   "ConvertValueWith" ->
     ceresHeaderWrapper CRSConvertValueWith
       >>= addVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
   "ReplaceText" -> ceresHeaderWrapper CRSReplaceText >>= addVariablePosition
   "ReplaceTextTo" ->
     ceresHeaderWrapper CRSReplaceTextTo
       >>= addVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
   "GetVPosition" ->
     ceresHeaderWrapper CRSGetVPosition
       >>= addVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
   "SetVPosition" ->
     ceresHeaderWrapper CRSSetVPosition
       >>= addVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
   "Random" ->
     ceresHeaderWrapper CRSRandom
       >>= addVariablePosition
@@ -108,174 +108,174 @@ parseCERES aText = case pHeader of
   "RandomBy" ->
     ceresHeaderWrapper CRSRandomBy
       >>= addVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
   "RandomWith" ->
     ceresHeaderWrapper CRSRandomWith
       >>= addVariablePosition
       >>= readCERESDelimiter
       >>= addValueType
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "RandomWithBy" ->
     ceresHeaderWrapper CRSRandomWithBy
       >>= addVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "ElapseTime" ->
     ceresHeaderWrapper CRSElapseTime
       >>= addVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
   "SPControl" -> ceresHeaderWrapper CRSSPControl >>= addVariablePosition
   "SIControl" ->
     ceresHeaderWrapper CRSSIControl
       >>= addVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
   "SIInit" ->
     ceresHeaderWrapper CRSSIInit
       >>= addVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "SIEnd" -> ceresHeaderWrapper CRSSIEnd >>= addVariablePosition
   "Noop"  -> ceresHeaderWrapper CRSNoop
   "Log" ->
-    ceresHeaderWrapper CRSLog >>= addVariablePosition >>= moreVariablePosition
+    ceresHeaderWrapper CRSLog >>= addVariablePosition >>= andVariablePosition
   "ParseScript" ->
     ceresHeaderWrapper CRSParseScript
       >>= addVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
   "ToInterpreter1" ->
-    ceresHeaderWrapper CRSToInterpreter1 >>= addCHeader >>= moreVariablePosition
+    ceresHeaderWrapper CRSToInterpreter1 >>= addCHeader >>= andVariablePosition
   "ToInterpreter2" ->
     ceresHeaderWrapper CRSToInterpreter2
       >>= addCHeader
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "ToInterpreter3" ->
     ceresHeaderWrapper CRSToInterpreter3
       >>= addCHeader
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "ToInterpreter4" ->
     ceresHeaderWrapper CRSToInterpreter4
       >>= addCHeader
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "ToInterpreter5" ->
     ceresHeaderWrapper CRSToInterpreter5
       >>= addCHeader
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "ToInterpreter6" ->
     ceresHeaderWrapper CRSToInterpreter6
       >>= addCHeader
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "ToInterpreter7" ->
     ceresHeaderWrapper CRSToInterpreter7
       >>= addCHeader
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "ToInterpreter8" ->
     ceresHeaderWrapper CRSToInterpreter8
       >>= addCHeader
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "Extend1" ->
-    ceresHeaderWrapper CRSExtend1 >>= addCHeader >>= moreVariablePosition
+    ceresHeaderWrapper CRSExtend1 >>= addCHeader >>= andVariablePosition
   "Extend2" ->
     ceresHeaderWrapper CRSExtend2
       >>= addCHeader
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "Extend3" ->
     ceresHeaderWrapper CRSExtend3
       >>= addCHeader
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "Extend4" ->
     ceresHeaderWrapper CRSExtend4
       >>= addCHeader
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "Extend5" ->
     ceresHeaderWrapper CRSExtend5
       >>= addCHeader
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "Extend6" ->
     ceresHeaderWrapper CRSExtend6
       >>= addCHeader
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "Extend7" ->
     ceresHeaderWrapper CRSExtend7
       >>= addCHeader
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   "Extend8" ->
     ceresHeaderWrapper CRSExtend8
       >>= addCHeader
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
-      >>= moreVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
+      >>= andVariablePosition
   _ -> Left ("[Fail] No such CERES Header", aText)
  where
   (pHeader, pRest) = T.breakOn " " aText
   ceresHeaderWrapper cH =
     findPattern " " "[Fail] Reading CERES Header fails" (cH, pRest)
-  parseValueType       = readValueTypeWrapper
-  readCERESDelimiter   = findPattern " " "[Fail] Reading CERES delimiter"
-  addVariablePosition  = readAppliable parseVariablePosition
-  addValueType         = readAppliable parseValueType
-  addCERESOperator     = readAppliable parseCERESOperator
-  addCHeader           = readAppliable parseCHeader
-  moreVariablePosition = readCERESDelimiter >=> addVariablePosition
-  moreCERESOperator    = readCERESDelimiter >=> addCERESOperator
+  parseValueType      = readValueTypeWrapper
+  readCERESDelimiter  = findPattern " " "[Fail] Reading CERES delimiter"
+  addVariablePosition = readAppliable parseVariablePosition
+  addValueType        = readAppliable parseValueType
+  addCERESOperator    = readAppliable parseCERESOperator
+  addCHeader          = readAppliable parseCHeader
+  andVariablePosition = readCERESDelimiter >=> addVariablePosition
+  andCERESOperator    = readCERESDelimiter >=> addCERESOperator
 
 parseCHeader aText = if T.null pRest
   then Left ("[Fail] Reading CERES CHeader fails", aText)

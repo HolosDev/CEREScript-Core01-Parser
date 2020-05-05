@@ -57,33 +57,31 @@ readVariableIndex aText = maybeNext (maybeNext eVI VINull mVINull)
   (pHeader, pRest) = TL.breakOn "=" aText
   viWrapper vi = findPattern "=" "[Fail] Reading VI Opener fails" (vi, pRest)
   eVI = case pHeader of
-    "VII"    -> viWrapper VII >>= addIdx
-    "VIN"    -> viWrapper VIN >>= addQuotedNKey
-    "VIpN"   -> viWrapper VIpN >>= addQuotedNKey
-    "VIIT"   -> viWrapper VIIT >>= addIdx >>= moreTime
-    "VINT"   -> viWrapper VINT >>= addQuotedNKey >>= moreTime
-    "VIpNT"  -> viWrapper VIpNT >>= addQuotedNKey >>= moreTime
-    "VIIRI"  -> viWrapper VIIRI >>= addIdx >>= moreIndices
-    "VINRI"  -> viWrapper VINRI >>= addQuotedNKey >>= moreIndices
-    "VIpNRI" -> viWrapper VIpNRI >>= addQuotedNKey >>= moreIndices
-    "VIIRIT" -> viWrapper VIIRIT >>= addIdx >>= moreIndices >>= moreTime
-    "VINRIT" -> viWrapper VINRIT >>= addQuotedNKey >>= moreIndices >>= moreTime
-    "VIpNRIT" ->
-      viWrapper VIpNRIT >>= addQuotedNKey >>= moreIndices >>= moreTime
+    "VII"     -> viWrapper VII >>= addIdx
+    "VIN"     -> viWrapper VIN >>= addQuotedNKey
+    "VIpN"    -> viWrapper VIpN >>= addQuotedNKey
+    "VIIT"    -> viWrapper VIIT >>= addIdx >>= andTime
+    "VINT"    -> viWrapper VINT >>= addQuotedNKey >>= andTime
+    "VIpNT"   -> viWrapper VIpNT >>= addQuotedNKey >>= andTime
+    "VIIRI"   -> viWrapper VIIRI >>= addIdx >>= andIndices
+    "VINRI"   -> viWrapper VINRI >>= addQuotedNKey >>= andIndices
+    "VIpNRI"  -> viWrapper VIpNRI >>= addQuotedNKey >>= andIndices
+    "VIIRIT"  -> viWrapper VIIRIT >>= addIdx >>= andIndices >>= andTime
+    "VINRIT"  -> viWrapper VINRIT >>= addQuotedNKey >>= andIndices >>= andTime
+    "VIpNRIT" -> viWrapper VIpNRIT >>= addQuotedNKey >>= andIndices >>= andTime
     "VIV"     -> viWrapper VIV >>= readAppliable parseValue
     "VIPtr"   -> viWrapper VIPtr >>= readAppliable parseVariablePosition
     "PVII"    -> viWrapper PVII >>= addIdx
     "PVIN"    -> viWrapper PVIN >>= addQuotedNKey
     "PVIpN"   -> viWrapper PVIpN >>= addQuotedNKey
     "PVIT"    -> viWrapper PVIT >>= addTime
-    "PVIIRI"  -> viWrapper PVIIRI >>= addIdx >>= moreIndices
-    "PVINRI"  -> viWrapper PVINRI >>= addQuotedNKey >>= moreIndices
-    "PVIpNRI" -> viWrapper PVIpNRI >>= addQuotedNKey >>= moreIndices
-    "PVIIRIT" -> viWrapper PVIIRIT >>= addIdx >>= moreIndices >>= moreTime
-    "PVINRIT" ->
-      viWrapper PVINRIT >>= addQuotedNKey >>= moreIndices >>= moreTime
+    "PVIIRI"  -> viWrapper PVIIRI >>= addIdx >>= andIndices
+    "PVINRI"  -> viWrapper PVINRI >>= addQuotedNKey >>= andIndices
+    "PVIpNRI" -> viWrapper PVIpNRI >>= addQuotedNKey >>= andIndices
+    "PVIIRIT" -> viWrapper PVIIRIT >>= addIdx >>= andIndices >>= andTime
+    "PVINRIT" -> viWrapper PVINRIT >>= addQuotedNKey >>= andIndices >>= andTime
     "PVIpNRIT" ->
-      viWrapper PVIpNRIT >>= addQuotedNKey >>= moreIndices >>= moreTime
+      viWrapper PVIpNRIT >>= addQuotedNKey >>= andIndices >>= andTime
     _ -> Left ("[Fail] Reading VariableIndex fails", aText)
   readIdx         = readIntWrapper "[Fail] Reading Idx fails"
   readTime        = readIntWrapper "[Fail] Reading Time fails"
@@ -94,9 +92,9 @@ readVariableIndex aText = maybeNext (maybeNext eVI VINull mVINull)
   addIndices      = readAppliable readIndices
   addValue        = readAppliable parseValue
   addQuotedNKey   = readAppliable readQuotedNKey
-  moreIdx         = readVIDelimiter >=> addIdx
-  moreTime        = readVIDelimiter >=> addTime
-  moreIndices     = readVIDelimiter >=> addIndices
+  andIdx          = readVIDelimiter >=> addIdx
+  andTime         = readVIDelimiter >=> addTime
+  andIndices      = readVIDelimiter >=> addIndices
 
 
 parseValue :: Text -> Result Value
@@ -170,7 +168,9 @@ eErrValueReader = convertResult ErrValue
 
 ePtrValueReader = convertResult PtrValue . parseVariablePosition
 
-eScrValueReader = error "[Fail] Not yet implemented before integrate Variable.Parser and Script.Parser modules"
+eScrValueReader =
+  error
+    "[Fail] Not yet implemented before integrate Variable.Parser and Script.Parser modules"
 
 
 -- TODO: Make more monadic
