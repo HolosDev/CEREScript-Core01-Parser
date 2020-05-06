@@ -18,6 +18,12 @@ import           Debug.Trace
 
 type Result a = Either (Message, Text) (a, Text)
 
+getResult :: Result a -> Maybe a
+getResult (Left  _     ) = Nothing
+getResult (Right (a, _)) = Just a
+getMessage (Left  (msg, _)) = Just msg
+getMessage (Right _       ) = Nothing
+
 convertResult :: (a -> b) -> Result a -> Result b
 convertResult f = either (\(e, t) -> Left (e, t)) (\(v, t) -> Right (f v, t))
 

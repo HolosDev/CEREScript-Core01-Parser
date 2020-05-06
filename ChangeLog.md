@@ -7,6 +7,12 @@ Changelog for CEREScript-SS-Parser
 * Use ready-made parser package
 
 
+## 0.0.7.1 -- 2020-05-07
+
+### Added
+* Add utility function for `Result a`
+
+
 ## 0.0.7.0 -- 2020-05-05
 
 ### Added
