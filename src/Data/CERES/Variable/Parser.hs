@@ -5,7 +5,7 @@ import           Control.Monad                  ( (>=>) )
 
 import           Data.Bifunctor
 import           Data.Either
-import qualified Data.IntMap                   as IM
+import qualified Data.IntMap.Strict            as IM
 import           Data.Maybe
 import qualified Data.Text                     as T
 import           Data.Text.Lazy                 ( Text )

@@ -7,7 +7,7 @@ import           Test.Framework.TH
 import           Test.HUnit.Base
 
 
-import qualified Data.IntMap                   as IM
+import qualified Data.IntMap.Strict            as IM
 import           Data.Text.Lazy                 ( Text )
 import qualified Data.Text.Lazy                as T
 
