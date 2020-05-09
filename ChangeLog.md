@@ -6,6 +6,9 @@ Changelog for CEREScript-SS-Parser
 ### Change
 * Use ready-made parser package
 
+### Fix
+* When parsing with closer, should parse nested object before finding the closer
+
 
 ## 0.0.7.1 -- 2020-05-07
 
