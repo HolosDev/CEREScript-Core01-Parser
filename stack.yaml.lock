@@ -5,13 +5,6 @@
 
 packages:
 - completed:
-    hackage: text-trie-0.2.5.0@sha256:8064c70e67dd3db1a04f3fc002b130d167fbc4da4101919fbb0da4484a917ca5,4377
-    pantry-tree:
-      size: 1258
-      sha256: 9464c910e4e3466b35b1e851b614b4104a7b407be1c35ee55ae4611cf81d213b
-  original:
-    hackage: text-trie-0.2.5.0
-- completed:
     hackage: splitmix-0.0.4@sha256:fb9bb8b54a2e76c8a021fe5c4c3798047e1f60e168379a1f80693047fe00ad0e,4813
     pantry-tree:
       size: 872

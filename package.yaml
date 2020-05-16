@@ -18,7 +18,6 @@ dependencies:
 - containers
 - text-show
 - text-show-instances
-- text-trie
 - vector
 - CEREScript-SS
 

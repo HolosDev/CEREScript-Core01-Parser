@@ -7,7 +7,6 @@ packages:
 #- /AoDw/CEREScript/CEREScript-SS00
 
 extra-deps:
-- text-trie-0.2.5.0
 - splitmix-0.0.4
 # In public
 #- github: HolosDev/ArchCEREScript
