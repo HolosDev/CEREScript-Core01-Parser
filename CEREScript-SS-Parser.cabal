@@ -1,0 +1,91 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 8473ff14d41c1b4caa54e3fa7fa3549387d71e7299c369479b13800437b615a1
+
+name:           CEREScript-SS-Parser
+version:        0.0.7.1
+description:    Please see the README on GitHub at <https://github.com/HolosDev/CEREScript-SS-Parser#readme>
+homepage:       https://github.com/HolosDev/CEREScript-SS-Parser#readme
+bug-reports:    https://github.com/HolosDev/CEREScript-SS-Parser/issues
+author:         YongJoon Joe
+maintainer:     Holos Works <developer@holos.dev>
+copyright:      2020 Holos Works / PPUZZL Group
+license:        OtherLicense
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/HolosDev/CEREScript-SS-Parser
+
+library
+  exposed-modules:
+      Data.CERES.Operator.Parser
+      Data.CERES.Parser
+      Data.CERES.Script.Parser
+      Data.CERES.Variable.Parser
+      Test.Data.CERES.Parser
+      Test.Data.CERES.Script.Parser
+      Test.Data.CERES.Variable.Parser
+  other-modules:
+      Paths_CEREScript_SS_Parser
+  hs-source-dirs:
+      src
+      test
+  default-extensions: OverloadedStrings TemplateHaskell
+  build-depends:
+      CEREScript-SS
+    , HUnit
+    , QuickCheck
+    , base >=4.7 && <5
+    , call-stack
+    , containers
+    , silently
+    , test-framework
+    , test-framework-hunit
+    , test-framework-quickcheck2
+    , test-framework-th
+    , text
+    , text-show
+    , text-show-instances
+    , vector
+  default-language: Haskell2010
+
+test-suite Test-Spec
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Test.Data.CERES.Parser
+      Test.Data.CERES.Script.Parser
+      Test.Data.CERES.Variable.Parser
+      Paths_CEREScript_SS_Parser
+  hs-source-dirs:
+      test
+      tests/Spec
+  default-extensions: OverloadedStrings TemplateHaskell TemplateHaskell OverloadedStrings
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      CEREScript-SS
+    , CEREScript-SS-Parser
+    , HUnit
+    , QuickCheck
+    , base >=4.7 && <5
+    , call-stack
+    , containers
+    , silently
+    , test-framework
+    , test-framework-hunit
+    , test-framework-quickcheck2
+    , test-framework-th
+    , text
+    , text-show
+    , text-show-instances
+    , vector
+  default-language: Haskell2010

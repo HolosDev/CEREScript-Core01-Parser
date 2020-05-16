@@ -18,6 +18,17 @@ packages:
       sha256: e58892088b95190bfb59a7c0803f7ef65338e57fc9b938d7c166563605003902
   original:
     hackage: splitmix-0.0.4
+- completed:
+    size: 16196
+    url: https://github.com/HolosDev/CEREScript-SS/archive/febb13ef5712592d613f1418ed95e6d62b071962.tar.gz
+    name: CEREScript-SS
+    version: 0.20.0.0
+    sha256: 73f5d6cca81512c8a19ffe67c1d5cdcc0cd36c167009d9fdc2d8a509b37c2b9a
+    pantry-tree:
+      size: 2270
+      sha256: 62397debb92e60a1210d8aaa31d1d311104c2776919096133d2d9a87c34d457a
+  original:
+    url: https://github.com/HolosDev/CEREScript-SS/archive/febb13ef5712592d613f1418ed95e6d62b071962.tar.gz
 snapshots:
 - completed:
     size: 524996

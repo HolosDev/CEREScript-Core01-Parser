@@ -15,4 +15,4 @@ extra-deps:
 #  commit: 88519609a5b06a1dc7842904f1b4163fc0ca22d2
 - github: HolosDev/CEREScript-SS
 #- git: https://gitlab.com/holosdev/CEREScript-SS
-  commit: 655ab9d0481f5543ed33ab926067c134b64271a8
+  commit: febb13ef5712592d613f1418ed95e6d62b071962
