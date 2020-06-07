@@ -176,7 +176,7 @@ eScrValueReader =
 -- TODO: Make more monadic
 
 eArrValueReader :: Text -> Result Value
-eArrValueReader aText = eArrValueReaderSub IM.empty (TL.append " || " aText)
+eArrValueReader aText = eArrValueReaderSub IM.empty (" || " <> aText)
 eArrValueReaderSub im aText
   | isRight shownItem = eArrValueReaderSub (IM.insert idx item im) aItemRest
   | isRight shownEnd  = Right (ArrValue im, aEndRest)

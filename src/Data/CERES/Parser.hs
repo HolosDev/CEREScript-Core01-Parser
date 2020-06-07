@@ -131,7 +131,7 @@ readIntListWrapper :: Message -> Text -> Result [Int]
 readIntListWrapper msg = readWrapper msg readIntList
 
 readIntList :: Text -> Maybe ([Int], Text)
-readIntList aText = maybe (mRest >>= readIntListSub [] . T.append ",")
+readIntList aText = maybe (mRest >>= readIntListSub [] . ("," <>))
                           (\t -> Just ([], t))
                           mNull
  where
@@ -151,7 +151,7 @@ readIntListSub acc aText | isJust shownEnd = Just (sort acc, aEndRest)
 eIntListReader :: Text -> Result [Int]
 eIntListReader aText = maybe
   (maybe (Left ("[Fail] Reading IL Opener", aText))
-         (eIntListReaderSub [] . T.append ",")
+         (eIntListReaderSub [] . ("," <>))
          mRest
   )
   (\t -> Right ([], t))

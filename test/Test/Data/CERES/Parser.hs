@@ -28,10 +28,10 @@ eqInverseParsingTester
   -> Assertion
 eqInverseParsingTester msg rA vA' parseF showF = case rA of
   Right (vA, rest) -> if vA == vA'
-    then assertEqual msg (Right (vA, rest)) (parseF (TL.append (showF vA) rest))
+    then assertEqual msg (Right (vA, rest)) (parseF (showF vA <> rest))
     else error "[ERROR] Input is not equal"
   Left (lMsg, rest) ->
-    assertEqual msg (Left (lMsg, rest)) (parseF (TL.append (showF vA') rest))
+    assertEqual msg (Left (lMsg, rest)) (parseF (showF vA' <> rest))
 
 eqParsingTester
   :: (Eq a, Show a)
@@ -42,6 +42,6 @@ eqParsingTester
   -> Assertion
 eqParsingTester msg rA parseF coreText = case rA of
   Right (vA, rest) ->
-    assertEqual msg (Right (vA, rest)) (parseF (TL.append coreText rest))
+    assertEqual msg (Right (vA, rest)) (parseF (coreText <> rest))
   Left (lMsg, rest) ->
-    assertEqual msg (Left (lMsg, rest)) (parseF (TL.append coreText rest))
+    assertEqual msg (Left (lMsg, rest)) (parseF (coreText <> rest))
